@@ -1,4 +1,4 @@
-package br.com.stelo.maquina.inativar.adapter.db.entity;
+package br.com.stelo.maquina.inativar.repositoryadapters.db.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

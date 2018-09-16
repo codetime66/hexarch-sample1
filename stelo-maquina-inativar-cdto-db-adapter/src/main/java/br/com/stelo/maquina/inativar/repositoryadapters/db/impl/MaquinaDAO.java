@@ -1,4 +1,6 @@
-package br.com.stelo.maquina.inativar.adapter.db.impl;
+package br.com.stelo.maquina.inativar.repositoryadapters.db.impl;
+
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -7,8 +9,8 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.stelo.maquina.inativar.adapter.db.IMaquinaDAO;
-import br.com.stelo.maquina.inativar.adapter.db.entity.MaquinaEntity;
+import br.com.stelo.maquina.inativar.repositoryadapters.db.IMaquinaDAO;
+import br.com.stelo.maquina.inativar.repositoryadapters.db.entity.MaquinaEntity;
 
 @Transactional
 @Repository
@@ -17,10 +19,10 @@ public class MaquinaDAO implements IMaquinaDAO {
 	@PersistenceContext	
 	private EntityManager entityManager;
 		
-	@Override
-	public MaquinaEntity getMaquinaById(String nuSerie) {
-		return entityManager.find(MaquinaEntity.class, nuSerie);
-	}
+	//@Override
+	//public MaquinaEntity getMaquinaById(String nuSerie) {
+	//	return entityManager.find(MaquinaEntity.class, nuSerie);
+	//}
 
 	@Override
 	public boolean inativar(String nuserie) {
@@ -59,4 +61,17 @@ public class MaquinaDAO implements IMaquinaDAO {
 		return count > 0 ? true : false;
 	}
 
+	@Override
+	public MaquinaEntity getMaquinaByNuSerie(String nuSerie) {
+		MaquinaEntity maquina = null;
+		String hql = "FROM "+MaquinaEntity.class.getName()+" as maq WHERE maq.sttusMaqna = 'A' and maq.nuSerie = ? ";
+		@SuppressWarnings("unchecked")
+		List<MaquinaEntity> maquinas = entityManager.createQuery(hql).setParameter(1, nuSerie)
+		              .getResultList();
+		if(maquinas!=null && !maquinas.isEmpty()) {
+		    maquina = (MaquinaEntity) maquinas.get(0);
+		}
+		return maquina;
+	}
+	
 }

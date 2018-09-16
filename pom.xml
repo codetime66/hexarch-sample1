@@ -28,6 +28,7 @@
 		<module>stelo-maquina-inativar-domain</module>
 		<module>stelo-maquina-inativar-rest-api-adapter</module>
 		<module>stelo-maquina-inativar-cdto-db-adapter</module>
+		<module>stelo-maquina-inativar-gsurf-adapter</module>
 		<module>stelo-maquina-inativar-application</module>
 	</modules>
 
