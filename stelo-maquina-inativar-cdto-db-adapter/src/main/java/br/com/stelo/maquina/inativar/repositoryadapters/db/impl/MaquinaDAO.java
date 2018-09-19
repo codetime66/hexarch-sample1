@@ -1,5 +1,6 @@
 package br.com.stelo.maquina.inativar.repositoryadapters.db.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,12 +19,28 @@ public class MaquinaDAO implements IMaquinaDAO {
 
 	@PersistenceContext	
 	private EntityManager entityManager;
-		
-	//@Override
-	//public MaquinaEntity getMaquinaById(String nuSerie) {
-	//	return entityManager.find(MaquinaEntity.class, nuSerie);
-	//}
 
+	@Override
+	public boolean inativar(String nuserie, String userName) {
+		StringBuilder hql = new StringBuilder();	
+		hql.append("update USR_CADU.TB_MAQNA_CATAO ");
+		hql.append(" set sttus_maqna = 'I', ");
+		hql.append("     id_sttus_mdulo_term = '5', ");
+		hql.append("     usuar_alt =:usuarAlt, ");
+		hql.append("     dt_alt =:dtAlt");
+		hql.append(" where ");
+		hql.append("     sttus_maqna = 'A' and ");
+		hql.append("     nu_serie =:nuSerie ");
+
+		Query query = entityManager.createNativeQuery(hql.toString());
+        query.setParameter("nuSerie", nuserie);
+        query.setParameter("usuarAlt", userName);
+        query.setParameter("dtAlt", new Date());
+
+        int updl = query.executeUpdate();
+        return updl>0;		
+	}
+	
 	@Override
 	public boolean inativar(String nuserie) {
 		StringBuilder hql = new StringBuilder();	
@@ -58,7 +75,7 @@ public class MaquinaDAO implements IMaquinaDAO {
 		String hql = "FROM Maquina as maq WHERE maq.nuSerie = ? ";
 		int count = entityManager.createQuery(hql).setParameter(1, nuSerie)
 		              .getResultList().size();
-		return count > 0 ? true : false;
+		return count > 0;
 	}
 
 	@Override

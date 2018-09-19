@@ -28,8 +28,9 @@ public class MaquinaRepositoryAdapter implements MaquinaRepository {
 		return maquina;
 	}
 
-	public boolean inativar(String nuserie) {
-		return maquinaDAO.inativar(nuserie);
+        @Override
+	public boolean inativar(String nuserie, String userName) {
+		return maquinaDAO.inativar(nuserie, userName);
 	}
 
 }

@@ -12,4 +12,6 @@ public interface IMaquinaDAO {
 	boolean inativar(Long nuTerm, String nuSerie);
 
 	MaquinaEntity getMaquinaByNuSerie(String nuSerie);
+
+	boolean inativar(String nuserie, String usuarioLogado);
 }

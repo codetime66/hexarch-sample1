@@ -24,18 +24,20 @@ public class InativarMaquinaServiceAdapter implements InativarMaquinaService {
 	private GsurfRepository gsurfRepository;
 
 	@Override
-	public boolean inativar(String nuserie) {
+	public boolean inativar(String nuserie, String userName) {
 		boolean steloOK = false;
 		Maquina maquina = steloRepository.getMaquinaByNuSerie(nuserie);
 		if (maquina != null && maquina.getCdSeqMaqnaMduloTerm() != null) {
-			steloOK = inativarStelo(nuserie);
-			inativarGsurf(maquina.getCdSeqMaqnaMduloTerm());
+			steloOK = inativarStelo(nuserie, userName);
+			if(steloOK) {
+			   inativarGsurf(maquina.getCdSeqMaqnaMduloTerm());
+			}
 		}
 		return steloOK;
 	}
 
-	private boolean inativarStelo(String nuserie) {
-		return steloRepository.inativar(nuserie);
+	private boolean inativarStelo(String nuserie, String userName) {
+		return steloRepository.inativar(nuserie, userName);
 	}
 
 	private NumeroTerminalGSurfResponse inativarGsurf(String nuCdSeqMaqnaMduloTerm) {

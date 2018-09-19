@@ -43,7 +43,7 @@ public class GsurfRepositoryAdapter implements GsurfRepository {
 		try {
 
 			ResponseEntity<String> response = restTemplate.exchange(getTerminalCancelResource(nuCdSeqMaqnaMduloTerm),
-					HttpMethod.PUT, getHttpEntity(), String.class);
+					/*HttpMethod.GET*/ HttpMethod.PUT, getHttpEntity(), String.class);
 
 			log.info("###GsurfRepositoryAdapter.cancel: HttpStatus=" + response.getStatusCode());
 
@@ -98,7 +98,7 @@ public class GsurfRepositoryAdapter implements GsurfRepository {
 	private HttpEntity<String> getHttpEntity() {
 		HttpHeaders httpHeaders = getGsurfHttpHeaders();
 		HttpEntity<String> entity = (gsurf_api_mock) ? null
-				: new HttpEntity<String>("parameters", httpHeaders);
+				: new HttpEntity<>("parameters", httpHeaders);
 		return entity;
 	}
 }
