@@ -25,18 +25,27 @@ public class InativarMaquinaServiceAdapter implements InativarMaquinaService {
 
 	@Override
 	public boolean inativar(String nuserie, String userName) {
+		
+		log.info("###InativarMaquinaServiceAdapter.inativar: nuserie="+nuserie+", userName="+userName);
+		
 		boolean steloOK = false;
 		Maquina maquina = steloRepository.getMaquinaByNuSerie(nuserie);
 		if (maquina != null && maquina.getCdSeqMaqnaMduloTerm() != null) {
 			steloOK = inativarStelo(nuserie, userName);
 			if(steloOK) {
+				
+			   log.info("###InativarMaquinaServiceAdapter.inativar: maquina.getCdSeqMaqnaMduloTerm()="+maquina.getCdSeqMaqnaMduloTerm());	
+				
 			   inativarGsurf(maquina.getCdSeqMaqnaMduloTerm());
 			}
+		}else {
+			log.info("###InativarMaquinaServiceAdapter.inativar: maquina is null");
 		}
 		return steloOK;
 	}
 
 	private boolean inativarStelo(String nuserie, String userName) {
+		log.info("###InativarMaquinaServiceAdapter.inativarStelo");
 		return steloRepository.inativar(nuserie, userName);
 	}
 

@@ -35,6 +35,9 @@ public class GsurfRepositoryAdapter implements GsurfRepository {
 	@Value("${gsurf.api.mock}")
 	private boolean gsurf_api_mock; // TESTE LOCAL USANDO JSON-SERVER
 
+    @Value("${gsurf_ws_key}")
+    private String gsurf_ws_key;
+    
 	@Autowired
 	RestTemplate restTemplate;
 
@@ -43,7 +46,7 @@ public class GsurfRepositoryAdapter implements GsurfRepository {
 		try {
 
 			ResponseEntity<String> response = restTemplate.exchange(getTerminalCancelResource(nuCdSeqMaqnaMduloTerm),
-					/*HttpMethod.GET*/ HttpMethod.PUT, getHttpEntity(), String.class);
+					HttpMethod.PUT, getHttpEntity(), String.class);
 
 			log.info("###GsurfRepositoryAdapter.cancel: HttpStatus=" + response.getStatusCode());
 
@@ -77,9 +80,11 @@ public class GsurfRepositoryAdapter implements GsurfRepository {
 
 	private HttpHeaders getGsurfHttpHeaders(TokenGsurf tokenGsurf) {
 		String token = tokenGsurf.getToken();
+		log.info("###getGsurfHttpHeaders(): ws_key = " + gsurf_ws_key);
 		log.info("###getGsurfHttpHeaders(): token = " + token);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("ws_key", "0d581bb8-ae8d-4313-a8f2-4777e8999c7e");
+		//headers.add("ws_key", "5a366530-f804-4651-aafb-a84d6dca0220");
+		headers.add("ws_key", gsurf_ws_key );
 		headers.add("ws_token", token);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		return headers;
@@ -101,4 +106,5 @@ public class GsurfRepositoryAdapter implements GsurfRepository {
 				: new HttpEntity<>("parameters", httpHeaders);
 		return entity;
 	}
+	
 }
