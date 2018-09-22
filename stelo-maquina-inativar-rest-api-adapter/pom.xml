@@ -7,12 +7,11 @@
     <parent>
         <artifactId>stelo-maquina-inativar</artifactId>
         <groupId>br.com.stelo</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1</version>
     </parent>
 
     <groupId>br.com.stelo</groupId>
     <artifactId>stelo-maquina-inativar-rest-api-adapter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -30,8 +29,18 @@
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+			<exclusions>
+                          <exclusion>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-starter-logging</artifactId>
+                          </exclusion>
+                        </exclusions>
         </dependency>
-        
+        <dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+ 
 		<dependency>
 			<groupId>br.com.stelo</groupId>
 			<artifactId>stelo-oauth-client-api</artifactId>
@@ -60,7 +69,7 @@
         <dependency>
             <groupId>br.com.stelo</groupId>
             <artifactId>stelo-maquina-inativar-domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
