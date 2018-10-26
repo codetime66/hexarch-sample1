@@ -28,7 +28,7 @@ public class MaquinaRepositoryAdapter implements MaquinaRepository {
 		return maquina;
 	}
 
-        @Override
+    @Override
 	public boolean inativar(String nuserie, String userName) {
 		return maquinaDAO.inativar(nuserie, userName);
 	}

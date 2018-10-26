@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.stelo.maquina.inativar.models.Maquina;
-import br.com.stelo.maquina.inativar.models.NumeroTerminalGSurfResponse;
 import br.com.stelo.maquina.inativar.ports.GsurfRepository;
 import br.com.stelo.maquina.inativar.ports.InativarMaquinaService;
 import br.com.stelo.maquina.inativar.ports.MaquinaRepository;
@@ -25,23 +24,22 @@ public class InativarMaquinaServiceAdapter implements InativarMaquinaService {
 
 	@Override
 	public boolean inativar(String nuserie, String userName) {
-		
-		log.info("###InativarMaquinaServiceAdapter.inativar: nuserie="+nuserie+", userName="+userName);
-		
-		boolean steloOK = false;
+
+		log.info("###InativarMaquinaServiceAdapter.inativar: nuserie=" + nuserie + ", userName=" + userName);
+
+		boolean inativarOK = false;
 		Maquina maquina = steloRepository.getMaquinaByNuSerie(nuserie);
-		if (maquina != null && maquina.getCdSeqMaqnaMduloTerm() != null) {
-			steloOK = inativarStelo(nuserie, userName);
-			if(steloOK) {
-				
-			   log.info("###InativarMaquinaServiceAdapter.inativar: maquina.getCdSeqMaqnaMduloTerm()="+maquina.getCdSeqMaqnaMduloTerm());	
-				
-			   inativarGsurf(maquina.getCdSeqMaqnaMduloTerm());
-			}
-		}else {
+		if (maquina != null && maquina.getCdSeqMaqnaMduloTerm() != null
+				&& inativarGsurf(maquina.getCdSeqMaqnaMduloTerm())) {
+
+			log.info("###InativarMaquinaServiceAdapter.inativar: maquina.getCdSeqMaqnaMduloTerm()="
+					+ maquina.getCdSeqMaqnaMduloTerm());
+			inativarOK = inativarStelo(nuserie, userName);
+
+		} else {
 			log.info("###InativarMaquinaServiceAdapter.inativar: maquina is null");
 		}
-		return steloOK;
+		return inativarOK;
 	}
 
 	private boolean inativarStelo(String nuserie, String userName) {
@@ -49,8 +47,8 @@ public class InativarMaquinaServiceAdapter implements InativarMaquinaService {
 		return steloRepository.inativar(nuserie, userName);
 	}
 
-	private NumeroTerminalGSurfResponse inativarGsurf(String nuCdSeqMaqnaMduloTerm) {
-		NumeroTerminalGSurfResponse response = gsurfRepository.cancel(nuCdSeqMaqnaMduloTerm);
-		return response;
+	private boolean inativarGsurf(String nuCdSeqMaqnaMduloTerm) {
+		log.info("###InativarMaquinaServiceAdapter.inativarGsurf");
+		return gsurfRepository.cancel(nuCdSeqMaqnaMduloTerm);
 	}
 }

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: stelo-maquina-inativar-cdto-db-adapter
+Implementation-Version: 0.0.1
+Built-By: carlos.fernandes
+Implementation-Vendor-Id: br.com.stelo
+Build-Jdk: 1.8.0_181
+Implementation-URL: http://projects.spring.io/spring-boot/stelo-maquin
+ a-inativar/stelo-maquina-inativar-cdto-db-adapter/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
